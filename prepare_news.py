@@ -46,9 +46,15 @@ def translate_title(title, source):
     if language == "ru":
         return title
 
+    language_codes = {
+        "de": "de-DE",
+        "uk": "uk-UA",
+        "en": "en-GB"
+    }
+
     translator = MyMemoryTranslator(
-        source=language,
-        target="ru"
+        source=language_codes.get(language, "en-GB"),
+        target="ru-RU"
     )
 
     return translator.translate(title)
