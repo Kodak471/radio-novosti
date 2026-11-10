@@ -17,19 +17,29 @@ jobs:
       - name: Скачать проект
         uses: actions/checkout@v4
 
-      - name: Установить Python
+      - name: Установить Python edge-tts
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Установить переводчик
-        run: pip install deep-translator
+       run: pip install deep-translator edge-tts
 
       - name: Получить новости
         run: python news.py
 
       - name: Перевести новости
         run: python prepare_news.py
+        
+      - name: Создать MP3
+        run: python make_audio.py
+
+      - name: Сохранить MP3
+        uses: actions/upload-artifact@v4
+        with:
+          name: radio-novosti-mp3
+          path: radio_novosti.mp3
+          if-no-files-found: error
 
       - name: Сохранить результат
         uses: actions/upload-artifact@v4
