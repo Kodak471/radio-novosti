@@ -3,13 +3,13 @@ import json
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from difflib import SequenceMatcher
-from deep_translator import GoogleTranslator
+from deep_translator import MyMemoryTranslator
 
 with open("news.json", encoding="utf-8") as f:
     data = json.load(f)
 
 now = datetime.now(timezone.utc)
-translator = GoogleTranslator(source="auto", target="ru")
+translator = MyMemoryTranslator(source="en", target="ru")
 
 selected = []
 seen = []
