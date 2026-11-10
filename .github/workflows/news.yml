@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Установить библиотеки
-        run: pip install deep-translator edge-tts feedparser
+        run: pip install --upgrade deep-translator edge-tts
 
       - name: Получить новости
         run: python news.py
@@ -31,9 +31,10 @@ jobs:
       - name: Перевести новости
         run: python prepare_news.py
 
-      - name: Создать MP3
-        run: python make_audio.py
-
+      - name: Проверить русский голос
+        run:  python -m edge_tts --voice ru-RU-DmitryNeural --text "Здравствуйте. Это проверка нашего радио." --write-media test.mp3
+              ls -lh test.mp3
+    
       - name: Сохранить результат
         uses: actions/upload-artifact@v4
         with:
