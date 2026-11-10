@@ -1,5 +1,5 @@
 
-name: Получение новостей
+name: Получение и перевод новостей
 
 on:
   workflow_dispatch:
@@ -22,12 +22,21 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Установить переводчик
+        run: pip install deep-translator
+
       - name: Получить новости
         run: python news.py
+
+      - name: Перевести новости
+        run: python prepare_news.py
 
       - name: Сохранить результат
         uses: actions/upload-artifact@v4
         with:
-          name: news-data
-          path: news.json
+          name: russian-news
+          path: |
+            news.json
+            selected_news.json
+            script.txt
           retention-days: 7
