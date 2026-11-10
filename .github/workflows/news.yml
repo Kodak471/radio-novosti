@@ -1,0 +1,33 @@
+
+name: Получение новостей
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 11,17 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Скачать проект
+        uses: actions/checkout@v4
+
+      - name: Установить Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Получить новости
+        run: python news.py
+
+      - name: Сохранить результат
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-data
+          path: news.json
+          retention-days: 7
